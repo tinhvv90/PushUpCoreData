@@ -85,9 +85,6 @@ class ScreenView: UIView {
     
     func maxButtonLabel() {
         
-        var sortDescriptor = NSSortDescriptor(key: "countPushUp", ascending: true)
-      
-        maxDayLabel.text = ("Best Record : ")
     }
     
 

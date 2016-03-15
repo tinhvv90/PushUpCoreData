@@ -9,12 +9,16 @@
 import UIKit
 import CoreData
 
-class HistoryTVC: UITableViewController {
+class HistoryTVC: UITableViewController , NSFetchedResultsControllerDelegate {
 
     
     var total = [TurnEntity]()
     let moContext = AppDelegate.shareInstance.managedObjectContext
-
+    lazy var context : NSManagedObjectContext = {
+        let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
+        return appDelegate.managedObjectContext
+    }()
+    var fetchedResultsController: NSFetchedResultsController!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -24,6 +28,19 @@ class HistoryTVC: UITableViewController {
 
         // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
         // self.navigationItem.rightBarButtonItem = self.editButtonItem()
+        
+        let fetchRequest = NSFetchRequest(entityName: "TurnEntity")
+        let fetchSort = NSSortDescriptor(key: "countPushUp", ascending: true)
+        fetchRequest.sortDescriptors = [fetchSort]
+        
+        fetchedResultsController = NSFetchedResultsController(fetchRequest: fetchRequest, managedObjectContext: context, sectionNameKeyPath: nil, cacheName: nil)
+        fetchedResultsController.delegate = self
+        
+        do {
+            try fetchedResultsController.performFetch()
+        }catch let error as NSError {
+            print("\(error.localizedDescription)")
+        }
     }
     
     override func viewWillAppear(animated: Bool) {
@@ -45,12 +62,18 @@ class HistoryTVC: UITableViewController {
 
     override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         // #warning Incomplete implementation, return the number of sections
-        return 1
+        guard let sectionCount = fetchedResultsController.sections?.count else {
+            return 0
+        }
+        return sectionCount
     }
 
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
-        return total.count
+        guard let sectionData = fetchedResultsController.sections?[section] else {
+            return 0
+        }
+        return sectionData.numberOfObjects
     }
 
     
@@ -62,10 +85,48 @@ class HistoryTVC: UITableViewController {
         
         cell.textLabel?.text = "Best \(store.countPushUp!)"
         cell.detailTextLabel?.text = ""
+//        
+//        let cell = tableView.dequeueReusableCellWithIdentifier("cell")!
+//        cell.textLabel?.text = "Best : \(total[indexPath.row].countPushUp!)"
+//        
         
         return cell
     }
+    // MARK: -  FetchedResultsController Delegate
     
+    func controllerWillChangeContent(controller: NSFetchedResultsController) {
+        tableView.beginUpdates()
+    }
+    
+    func controllerDidChangeContent(controller: NSFetchedResultsController) {
+        tableView.endUpdates()
+    }
+    
+    func controller(controller: NSFetchedResultsController, didChangeSection sectionInfo: NSFetchedResultsSectionInfo, atIndex sectionIndex: Int, forChangeType type: NSFetchedResultsChangeType) {
+        // 1
+        switch type {
+        case .Insert:
+            tableView.insertSections(NSIndexSet(index: sectionIndex), withRowAnimation: .Automatic)
+        case .Delete:
+            tableView.deleteSections(NSIndexSet(index: sectionIndex), withRowAnimation: .Automatic)
+        default: break
+        }
+    }
+    
+    func controller(controller: NSFetchedResultsController, didChangeObject anObject: AnyObject, atIndexPath indexPath: NSIndexPath?, forChangeType type: NSFetchedResultsChangeType, newIndexPath: NSIndexPath?) {
+        // 2
+        switch type {
+        case .Insert:
+            tableView.insertRowsAtIndexPaths([newIndexPath!], withRowAnimation: .Automatic)
+        case .Delete:
+            tableView.deleteRowsAtIndexPaths([indexPath!], withRowAnimation: .Automatic)
+        default: break
+        }
+    }
+    
+    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        tableView.deselectRowAtIndexPath(indexPath, animated: true)
+    }
 
     /*
     // Override to support conditional editing of the table view.
@@ -75,17 +136,24 @@ class HistoryTVC: UITableViewController {
     }
     */
 
-    /*
+    
     // Override to support editing the table view.
     override func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
-        if editingStyle == .Delete {
-            // Delete the row from the data source
-            tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Fade)
-        } else if editingStyle == .Insert {
-            // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-        }    
+        switch editingStyle {
+        case .Delete:
+            let movie = fetchedResultsController.objectAtIndexPath(indexPath) as! NSManagedObject
+            context.deleteObject(movie)
+            
+            do {
+                try context.save()
+            }catch let error as NSError {
+                print("Error saving context after delete: \(error.localizedDescription)")
+            }
+        default: break
+        }
+        
     }
-    */
+    
 
     /*
     // Override to support rearranging the table view.
