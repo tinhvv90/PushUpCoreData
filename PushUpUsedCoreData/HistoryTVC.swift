@@ -11,6 +11,13 @@ import CoreData
 
 class HistoryTVC: UITableViewController , NSFetchedResultsControllerDelegate {
 
+    lazy var dateFormatter: NSDateFormatter = {
+        
+        let formatter = NSDateFormatter()
+        formatter.dateStyle = .ShortStyle
+        formatter.timeStyle = .MediumStyle
+        return formatter
+    }()
     
     var total = [TurnEntity]()
     let moContext = AppDelegate.shareInstance.managedObjectContext
@@ -41,6 +48,7 @@ class HistoryTVC: UITableViewController , NSFetchedResultsControllerDelegate {
         }catch let error as NSError {
             print("\(error.localizedDescription)")
         }
+        
     }
     
     override func viewWillAppear(animated: Bool) {
@@ -84,9 +92,10 @@ class HistoryTVC: UITableViewController , NSFetchedResultsControllerDelegate {
         let store = total[indexPath.row]
         
         cell.textLabel?.text = "Best \(store.countPushUp!)"
-        cell.detailTextLabel?.text = ""
-//        
-//        let cell = tableView.dequeueReusableCellWithIdentifier("cell")!
+        
+        cell.detailTextLabel?.text = "\(store.data)"
+        
+//        let cll = tableView.dequeueReusableCellWithIdentifier("cell")!
 //        cell.textLabel?.text = "Best : \(total[indexPath.row].countPushUp!)"
 //        
         

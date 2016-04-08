@@ -10,7 +10,7 @@ import UIKit
 import AVFoundation
 
 class ViewController: UIViewController {
-    var pushView                        : ScreenView!
+    var pushView : ScreenView!
     
     
     @IBAction func historyBarButton(sender: AnyObject) {

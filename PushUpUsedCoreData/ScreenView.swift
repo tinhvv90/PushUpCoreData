@@ -14,14 +14,14 @@ class ScreenView: UIView {
     
     let pushButton                      : UIButton
     var numbersOfPushLabel              : UILabel               = UILabel()
-    let finishButton                       : UIButton              = UIButton()
+    let finishButton                    : UIButton              = UIButton()
     let maxDayLabel                     : UILabel               = UILabel()
     let sumDayLabel                     : UILabel               = UILabel()
-    let newTurnButton                     : UIButton              = UIButton()
+    let newTurnButton                   : UIButton              = UIButton()
     var audioPlayer                     : AVAudioPlayer         = AVAudioPlayer()
     var resetAudioPlayer                : AVAudioPlayer         = AVAudioPlayer()
     var token                           : dispatch_once_t       = 0
-    var total : TurnEntity!
+    var total = [TurnEntity]()
     
     let moContext = AppDelegate.shareInstance.managedObjectContext
     
@@ -66,10 +66,10 @@ class ScreenView: UIView {
         setupAudioPlayer()
         createResetButtonCurrent(newTurnButton, titleButton: "New Turn", selector: "newTurn")
         createResetButtonCurrent(finishButton, titleButton: "Finish", selector: "finish")
-        creataLabelCurrent(maxDayLabel, titleLabel: "Best Record : ")
-        creataLabelCurrent(sumDayLabel, titleLabel: "Sum: ")
+//        creataLabelCurrent(maxDayLabel, titleLabel: "Best Record : ")
+//        creataLabelCurrent(sumDayLabel, titleLabel: "Sum: ")
         createNumbersOfPushCurrent()
-        maxButtonLabel()
+    
     }
     
     private func layoutPushButton() {
@@ -80,14 +80,6 @@ class ScreenView: UIView {
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
-    
-    
-    func maxButtonLabel() {
-        
-    }
-    
-
     
     private func layoutButtons() {
         let group = UIView()
@@ -149,6 +141,7 @@ class ScreenView: UIView {
         let store = TurnEntity(entity: storeDescription!, insertIntoManagedObjectContext: moContext)
         
         store.countPushUp = Int(numbersOfPushLabel.text!)
+        store.data = NSDate()
         
         var error: NSError?
         
@@ -164,7 +157,6 @@ class ScreenView: UIView {
             let alert = UIAlertView(title: "Save",message: "Success", delegate: nil, cancelButtonTitle: "Ok")
             alert.show()
         }
-
     }
     
    
@@ -177,10 +169,10 @@ class ScreenView: UIView {
         return audio
     }
     
+    
 }
 
 // MARK: layout if portation
-
 extension ScreenView {
     
     func createNumbersOfPushCurrent() {

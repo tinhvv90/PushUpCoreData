@@ -23,6 +23,7 @@
 		3FCB1AAE1C96756A00C11B2B /* TurnEntity+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FCB1AAC1C96756A00C11B2B /* TurnEntity+CoreDataProperties.swift */; };
 		3FCB1AAF1C96756A00C11B2B /* TurnEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FCB1AAD1C96756A00C11B2B /* TurnEntity.swift */; };
 		3FCB1AB11C96761B00C11B2B /* HistoryTVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FCB1AB01C96761B00C11B2B /* HistoryTVC.swift */; };
+		DCB2E3BD1CB7536C00A3A0E0 /* Alert.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCB2E3BC1CB7536C00A3A0E0 /* Alert.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -65,6 +66,7 @@
 		3FCB1AAC1C96756A00C11B2B /* TurnEntity+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "TurnEntity+CoreDataProperties.swift"; path = "../TurnEntity+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		3FCB1AAD1C96756A00C11B2B /* TurnEntity.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TurnEntity.swift; path = ../TurnEntity.swift; sourceTree = "<group>"; };
 		3FCB1AB01C96761B00C11B2B /* HistoryTVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HistoryTVC.swift; sourceTree = "<group>"; };
+		DCB2E3BC1CB7536C00A3A0E0 /* Alert.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Alert.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -118,6 +120,7 @@
 				3FCB1A711C96742100C11B2B /* AppDelegate.swift */,
 				3FCB1A731C96742100C11B2B /* ViewController.swift */,
 				3FCB1AA21C96744800C11B2B /* ScreenView.swift */,
+				DCB2E3BC1CB7536C00A3A0E0 /* Alert.swift */,
 				3FCB1AA41C96746100C11B2B /* MTAutoLayout.swift */,
 				3FCB1A751C96742100C11B2B /* Main.storyboard */,
 				3FCB1AB01C96761B00C11B2B /* HistoryTVC.swift */,
@@ -289,6 +292,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DCB2E3BD1CB7536C00A3A0E0 /* Alert.swift in Sources */,
 				3FCB1A741C96742100C11B2B /* ViewController.swift in Sources */,
 				3FCB1AAF1C96756A00C11B2B /* TurnEntity.swift in Sources */,
 				3FCB1AB11C96761B00C11B2B /* HistoryTVC.swift in Sources */,
@@ -523,6 +527,7 @@
 				3FCB1A9B1C96742100C11B2B /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		3FCB1A9C1C96742100C11B2B /* Build configuration list for PBXNativeTarget "PushUpUsedCoreDataTests" */ = {
 			isa = XCConfigurationList;
@@ -531,6 +536,7 @@
 				3FCB1A9E1C96742100C11B2B /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		3FCB1A9F1C96742100C11B2B /* Build configuration list for PBXNativeTarget "PushUpUsedCoreDataUITests" */ = {
 			isa = XCConfigurationList;
@@ -539,6 +545,7 @@
 				3FCB1AA11C96742100C11B2B /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 
